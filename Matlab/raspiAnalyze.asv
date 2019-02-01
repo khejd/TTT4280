@@ -29,16 +29,16 @@ channels = 5;   % Number of ADC channels used
 % ylabel('Magnitude');
 
 % Plot all raw data and corresponding amplitude response
-% fh_raw = figure;    % fig handle
-% plot(rawData,'-o');
-% ylim([0, 4095]) % 12 bit ADC gives values in range [0, 4095]
-% xlabel('sample');
-% ylabel('conversion value');
-% legendStr = cell(1,channels);
-% for i = 1:channels
-%     legendStr{1,i} = ['ch. ' num2str(i)];
-% end
-% legend(legendStr,'location','best');
-% title('Raw ADC data');
+fh_raw = figure;    % fig handle
+plot(rawData,'-o');
+ylim([0, 4095]) % 12 bit ADC gives values in range [0, 4095]
+xlabel('sample');
+ylabel('conversion value');
+legendStr = cell(1,channels);
+for i = 1:channels
+    legendStr{1,i} = ['ch. ' num2str(i)];
+end
+legend(legendStr,'location','best');
+title('Raw ADC data');
 
 end

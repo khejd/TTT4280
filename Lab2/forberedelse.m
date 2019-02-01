@@ -2,12 +2,12 @@
 rawData = raspiAnalyze();
 
 fs = 31250;
-fpass = [5,1000];
+fpass = 500;
 int_factor = 16;
-DC = mean(mean(rawData(:,3:5)));
-sound3 = rawData(:,3)-DC;
-sound4 = rawData(:,4)-DC;
-sound5 = rawData(:,5)-DC;
+
+sound3 = highpass(rawData(:,3),fpass,fs);
+sound4 = highpass(rawData(:,4),fpass,fs);
+sound5 = highpass(rawData(:,5),fpass,fs);
 
 % int_sound3 = bandpass(interp(sound3, int_factor),fpass,fs*int_factor);
 % int_sound4 = bandpass(interp(sound4, int_factor),fpass,fs*int_factor);
@@ -17,25 +17,25 @@ int_sound3 = interp(sound3, int_factor);
 int_sound4 = interp(sound4, int_factor);
 int_sound5 = interp(sound5, int_factor);
 
-[r34,lags34] = xcorr(int_sound3, int_sound4);
-[r35,lags35] = xcorr(int_sound3, int_sound5);
-[r45,lags45] = xcorr(int_sound4, int_sound5);
+[r43,lags43] = xcorr(int_sound4, int_sound3);
+[r53,lags53] = xcorr(int_sound5, int_sound3);
+[r54,lags54] = xcorr(int_sound5, int_sound4);
 
-plot(lags34,r34,'-o')
+% plot(lags43,r43,'-o');
 
-r34_max = max(abs(r34));
-l34 = find(r34==r34_max | r34==-r34_max);
-dt_34 = abs((l34-max(lags34))/(fs*int_factor));
+r43_max = max(abs(r43));
+l43 = find(r43==r43_max | r43==-r43_max);
+dt_43 = abs((l43-max(lags43))/(fs*int_factor));
 
-r35_max = max(abs(r35));
-l35 = find(r35==r35_max | r35==-r35_max);
-dt_35 = abs((l35-max(lags35))/(fs*int_factor));
+r53_max = max(abs(r53));
+l53 = find(r53==r53_max | r53==-r53_max);
+dt_53 = abs((l53-max(lags53))/(fs*int_factor));
 
-r45_max = max(abs(r45));
-l45 = find(r45==r45_max | r45==-r45_max);
-dt_45 = abs((l45-max(lags45))/(fs*int_factor));
+r54_max = max(abs(r54));
+l54 = find(r54==r54_max | r54==-r54_max);
+dt_54 = abs((l54-max(lags54))/(fs*int_factor));
 
-theta = atand(sqrt(3)*(dt_34+dt_35)/(dt_34-dt_35-2*dt_45));
+theta = atand(sqrt(3)*(dt_43+dt_53)/(dt_43-dt_53-2*dt_54));
 fprintf("Theta = %f\n",theta)
 
 
