@@ -14,7 +14,7 @@ function rawData = raspiAnalyze()
 % Open, import and close binary data file produced by Raspberry Pi
 %% FIXME: Change this.
 
-path = 'Z:/lab1/micTest.dat';
+path = 'X:/lab1/micTest.dat';
 
 % Definitions
 channels = 5;   % Number of ADC channels used

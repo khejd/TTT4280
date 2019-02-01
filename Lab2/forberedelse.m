@@ -21,6 +21,8 @@ int_sound5 = interp(sound5, int_factor);
 [r35,lags35] = xcorr(int_sound3, int_sound5);
 [r45,lags45] = xcorr(int_sound4, int_sound5);
 
+plot(lags34,r34,'-o')
+
 r34_max = max(abs(r34));
 l34 = find(r34==r34_max | r34==-r34_max);
 dt_34 = abs((l34-max(lags34))/(fs*int_factor));
@@ -33,7 +35,7 @@ r45_max = max(abs(r45));
 l45 = find(r45==r45_max | r45==-r45_max);
 dt_45 = abs((l45-max(lags45))/(fs*int_factor));
 
-theta = atand(sqrt(3)*(dt_34+dt_35)/(dt_34-dt_35-2*dt_45))+360;
+theta = atand(sqrt(3)*(dt_34+dt_35)/(dt_34-dt_35-2*dt_45));
+fprintf("Theta = %f\n",theta)
 
-%test
 
