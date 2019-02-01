@@ -41,16 +41,15 @@ dt_53 = l53/(fs*int_factor);
 r54_max = max(abs(r54));
 l54 = nlen - find(r54==r54_max | r54==-r54_max);
 dt_54 = l54/(fs*int_factor);
-
-timeMatrix = [dt_43,dt_53,dt_54];
+%%
+timeMatrix = [dt_43;dt_53;dt_54];
 a = 5.018;
-spos = [[0,1]*a;[-sqrt(3)/2,-0.5]*a;[sqrt(3)/2,-0.5]*a];
-spos = spos';
-x43 = spos(:,2)-spos(:,1);
-x53 = spos(:,3)-spos(:,1);
-x54 = spos(:,3)-spos(:,2);
-xmatrix = [x43;x53;x54]';
-xvector = -343.4*pinv(xmatrix).*timeMatrix;
+spos = [[0,1,0]*a;[-sqrt(3)/2,-0.5,0]*a;[sqrt(3)/2,-0.5,0]*a];
+x43 = spos(2,:)-spos(1,:);
+x53 = spos(3,:)-spos(1,:);
+x54 = spos(3,:)-spos(2,:);
+xmatrix = [x43;x53;x54];
+xvector = -343.4*pinv(xmatrix)*timeMatrix;
 theta2 = atan2d(xvector(2),xvector(1));
 
 theta1 = atand(sqrt(3)*(dt_43+dt_53)/(dt_43-dt_53-2*dt_54));
