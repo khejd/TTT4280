@@ -31,7 +31,7 @@ int_sound5 = interp(sound5, int_factor);
 % plot(lags43,r43,'-o');
 nlen = numel(int_sound3);
 r43_max = max(abs(r43));
-l43 = find(r43==r43_max | r43==-r43_max);
+l43 = nlen - find(r43==r43_max | r43==-r43_max);
 dt_43 = l43/(fs*int_factor);
 
 r53_max = max(abs(r53));
