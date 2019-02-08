@@ -1,13 +1,19 @@
 % Forberedelsesoppgave 1
+function theta2 = forberedelse()
 rawData = raspiAnalyze();
 
 fs = 31250;
 fpass = 500;
+fpassband = [100,300];
 int_factor = 16;
 %%
 sound3 = highpass(rawData(:,3),fpass,fs);
 sound4 = highpass(rawData(:,4),fpass,fs);
 sound5 = highpass(rawData(:,5),fpass,fs);
+
+% sound3 = bandpass(rawData(:,3),fpassband,fs);
+% sound4 = bandpass(rawData(:,4),fpassband,fs);
+% sound5 = bandpass(rawData(:,5),fpassband,fs);
 
 n=numel(sound3);
 n1 = ceil(n*(1/10));
@@ -41,20 +47,22 @@ dt_53 = l53/(fs*int_factor);
 r54_max = max(abs(r54));
 l54 = nlen - find(r54==r54_max | r54==-r54_max);
 dt_54 = l54/(fs*int_factor);
-
-timeMatrix = [dt_43,dt_53,dt_54];
+%%
+timeMatrix = [dt_43;dt_53;dt_54];
 a = 5.018;
-spos = [[0,1]*a;[-sqrt(3)/2,-0.5]*a;[sqrt(3)/2,-0.5]*a];
-spos = spos';
-x43 = spos(:,2)-spos(:,1);
-x53 = spos(:,3)-spos(:,1);
-x54 = spos(:,3)-spos(:,2);
-xmatrix = [x43;x53;x54]';
-xvector = -343.4*pinv(xmatrix).*timeMatrix;
+spos = [[0,1,0]*a;[-sqrt(3)/2,-0.5,0]*a;[sqrt(3)/2,-0.5,0]*a];
+x43 = spos(2,:)-spos(1,:);
+x53 = spos(3,:)-spos(1,:);
+x54 = spos(3,:)-spos(2,:);
+xmatrix = [x43;x53;x54];
+xvector = -343.4*pinv(xmatrix)*timeMatrix;
 theta2 = atan2d(xvector(2),xvector(1));
+
+if theta2 < 0
+    theta2 = theta2 + 360;
+end
 
 theta1 = atand(sqrt(3)*(dt_43+dt_53)/(dt_43-dt_53-2*dt_54));
 
 fprintf("Theta avansert = %f\nTheta enkel = %f\n",theta2,theta1)
-
-
+end
