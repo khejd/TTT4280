@@ -14,7 +14,7 @@ function rawData = raspiAnalyze()
 % Open, import and close binary data file produced by Raspberry Pi
 %% FIXME: Change this.
 
-path = 'W:/lab1/micTest.dat';
+path = 'X:/lab1/radarSample.dat';
 
 % Definitions
 channels = 5;   % Number of ADC channels used
@@ -30,8 +30,8 @@ channels = 5;   % Number of ADC channels used
 
 % Plot all raw data and corresponding amplitude response
 % fh_raw = figure;    % fig handle
-% plot(rawData,'-o');
-% ylim([0, 4095]) % 12 bit ADC gives values in range [0, 4095]
+% plot(rawData(:,1:2),'-o');
+% ylim([0, 4095]); % 12 bit ADC gives values in range [0, 4095]
 % xlabel('sample');
 % ylabel('conversion value');
 % legendStr = cell(1,channels);
