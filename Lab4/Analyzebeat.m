@@ -1,15 +1,16 @@
 clear
-filename = 'mt2';
-save_roi(filename)
+filename = 'mt1';
+%save_roi(filename)
 load(strcat(filename,'.mat'))
 
-data = highpass(output_channels,1/sample_rate);
+%data = highpass(output_channels,1/sample_rate);
+data = bandpass(output_channels,[1 3],sample_rate);
 % plot(data)
 for i=1:3
     [autocorrelation(:,i),lags(:,i)] = xcorr(data(:,i), length(data(:,i)));
-    %subplot(3,1,i)
-    [pks,locs] = findpeaks(autocorrelation(:,i),'MinPeakHeight',autocorrelation(1,i)*0.1);
-    %plot(lags(:,i), autocorrelation(:,i), lags(locs,i), pks,'or')
+    subplot(3,1,i)
+    [pks,locs] = findpeaks(autocorrelation(:,i),'MinPeakHeight',autocorrelation((length(autocorrelation)+1)/2,i)*0.04);
+    plot(lags(:,i), autocorrelation(:,i), lags(locs,i), pks,'or')
     
     middle(i) = (length(locs)+1)/2;
     n = 5;
@@ -22,4 +23,4 @@ end
 pulsPeriode = totalSum/n;
 puls = sample_rate./pulsPeriode.*60;
 
-%SNR = calculate_SNR(output_channels, pulse_bin, start_noise_bin, should_plot);
+SNR = calculate_SNR(output_channels, 1, 90, true);

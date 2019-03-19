@@ -61,7 +61,7 @@ freqs = (-L/2:L/2-1)/L;
 
 %use only positive part
 fft_spectrum = fft_spectrum(freqs >= 0, :);
-freqs = freqs(freqs >= 0);
+freqs = freqs(freqs >= 0);    
 
 %get signal bin
 pulse_bin_amplitude = fft_spectrum(pulse_bin,:);
@@ -80,7 +80,7 @@ if should_plot
 		axes(channel) = subplot(1, 3, channel);
 
 		%plot FFT
-		semilogy(fft_spectrum(:,channel))
+		semilogy(abs(fft_spectrum(:,channel)))
 		hold on;
 
 		%mark signal bin
