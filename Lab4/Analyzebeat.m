@@ -1,5 +1,5 @@
 clear
-filename = 'mt1';
+filename = 'mt4';
 %save_roi(filename)
 load(strcat(filename,'.mat'))
 
@@ -23,4 +23,4 @@ end
 pulsPeriode = totalSum/n;
 puls = sample_rate./pulsPeriode.*60;
 
-SNR = calculate_SNR(output_channels, 1, 90, true);
+SNR = calculate_SNR(output_channels, 34, 90, true);
